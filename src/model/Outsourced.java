@@ -1,8 +1,8 @@
-package sample;
+package model;
 
 public class Outsourced extends Part {
 
-    // VARAIBLES //
+    // VARIABLES //
     private String _companyName;
 
     // INITIALIZERS //
