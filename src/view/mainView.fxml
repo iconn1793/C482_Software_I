@@ -18,7 +18,7 @@
           <RowConstraints maxHeight="100.0" minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label fx:id="mainFormTitleLabel" text="Inventory Management System">
+            <Label text="Inventory Management System">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
@@ -26,7 +26,7 @@
                   <Insets left="25.0" />
                </GridPane.margin>
             </Label>
-            <Button mnemonicParsing="false" text="Exit" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
+            <Button fx:id="mainExitButton" mnemonicParsing="false" text="Exit" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
                <GridPane.margin>
                   <Insets right="75.0" />
                </GridPane.margin></Button>
@@ -42,7 +42,7 @@
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </Label>
-                        <TextField maxWidth="-Infinity" prefHeight="27.0" prefWidth="225.0" promptText="Search by part ID or name" StackPane.alignment="BOTTOM_RIGHT">
+                        <TextField fx:id="partSearchbar" maxWidth="-Infinity" prefHeight="27.0" prefWidth="225.0" promptText="Search by part ID or name" StackPane.alignment="BOTTOM_RIGHT">
                            <StackPane.margin>
                               <Insets right="20.0" />
                            </StackPane.margin>
@@ -54,25 +54,25 @@
                   </StackPane>
                   <TableView prefHeight="250.0" prefWidth="400.0">
                     <columns>
-                      <TableColumn prefWidth="75.0" text="Part ID" />
-                      <TableColumn prefWidth="100.0" text="Part Name" />
-                        <TableColumn prefWidth="125.0" text="Inventory Level" />
-                        <TableColumn prefWidth="75.0" text="Price/Cost per Unit" />
+                      <TableColumn fx:id="partIdColumn" prefWidth="75.0" text="Part ID" />
+                      <TableColumn fx:id="partNameColumn" prefWidth="100.0" text="Part Name" />
+                        <TableColumn fx:id="partInventoryColumn" prefWidth="125.0" text="Inventory Level" />
+                        <TableColumn fx:id="partPriceColumn" prefWidth="75.0" text="Price/Cost per Unit" />
                     </columns>
                   </TableView>
                   <HBox alignment="CENTER_RIGHT" prefHeight="40.0" prefWidth="300.0">
                      <children>
-                        <Button mnemonicParsing="false" text="Add">
+                        <Button fx:id="partAddButton" mnemonicParsing="false" text="Add">
                            <HBox.margin>
                               <Insets right="10.0" />
                            </HBox.margin>
                         </Button>
-                        <Button mnemonicParsing="false" text="Modify">
+                        <Button fx:id="partModifyButton" mnemonicParsing="false" text="Modify">
                            <HBox.margin>
                               <Insets right="10.0" />
                            </HBox.margin>
                         </Button>
-                        <Button mnemonicParsing="false" text="Delete">
+                        <Button fx:id="partDeleteButton" mnemonicParsing="false" text="Delete">
                            <HBox.margin>
                               <Insets right="10.0" />
                            </HBox.margin>
@@ -101,7 +101,7 @@
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </Label>
-                        <TextField maxWidth="-Infinity" prefHeight="27.0" prefWidth="225.0" promptText="Search by product ID or name" StackPane.alignment="BOTTOM_RIGHT">
+                        <TextField fx:id="productSearchbar" maxWidth="-Infinity" prefHeight="27.0" prefWidth="225.0" promptText="Search by product ID or name" StackPane.alignment="BOTTOM_RIGHT">
                            <StackPane.margin>
                               <Insets right="20.0" />
                            </StackPane.margin>
@@ -113,25 +113,25 @@
                   </StackPane>
                   <TableView prefHeight="250.0" prefWidth="400.0">
                      <columns>
-                        <TableColumn prefWidth="75.0" text="Product ID" />
-                        <TableColumn prefWidth="100.0" text="Product Name" />
-                        <TableColumn prefWidth="125.0" text="Inventory Level" />
-                        <TableColumn prefWidth="75.0" text="Price/Cost per Unit" />
+                        <TableColumn fx:id="productIdColumn" prefWidth="75.0" text="Product ID" />
+                        <TableColumn fx:id="productNameColumn" prefWidth="100.0" text="Product Name" />
+                        <TableColumn fx:id="productInventoryColumn" prefWidth="125.0" text="Inventory Level" />
+                        <TableColumn fx:id="productPriceColumn" prefWidth="75.0" text="Price/Cost per Unit" />
                      </columns>
                   </TableView>
                   <HBox alignment="CENTER_RIGHT" prefHeight="40.0" prefWidth="300.0">
                      <children>
-                        <Button mnemonicParsing="false" text="Add">
+                        <Button fx:id="productAddButton" mnemonicParsing="false" text="Add">
                            <HBox.margin>
                               <Insets right="10.0" />
                            </HBox.margin>
                         </Button>
-                        <Button mnemonicParsing="false" text="Modify">
+                        <Button fx:id="productModifyButton" mnemonicParsing="false" text="Modify">
                            <HBox.margin>
                               <Insets right="10.0" />
                            </HBox.margin>
                         </Button>
-                        <Button mnemonicParsing="false" text="Delete">
+                        <Button fx:id="productDeleteButton" mnemonicParsing="false" text="Delete">
                            <HBox.margin>
                               <Insets right="10.0" />
                            </HBox.margin>
