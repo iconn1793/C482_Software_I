@@ -42,7 +42,7 @@
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </Label>
-                        <TextField maxWidth="-Infinity" prefHeight="27.0" prefWidth="181.0" promptText="Search by part ID or name" StackPane.alignment="BOTTOM_RIGHT">
+                        <TextField maxWidth="-Infinity" prefHeight="27.0" prefWidth="225.0" promptText="Search by part ID or name" StackPane.alignment="BOTTOM_RIGHT">
                            <StackPane.margin>
                               <Insets right="20.0" />
                            </StackPane.margin>
@@ -54,10 +54,10 @@
                   </StackPane>
                   <TableView prefHeight="250.0" prefWidth="400.0">
                     <columns>
-                      <TableColumn prefWidth="75.0" text="C1" />
-                      <TableColumn prefWidth="75.0" text="C2" />
-                        <TableColumn prefWidth="75.0" text="Column X" />
-                        <TableColumn prefWidth="75.0" text="Column X" />
+                      <TableColumn prefWidth="75.0" text="Part ID" />
+                      <TableColumn prefWidth="100.0" text="Part Name" />
+                        <TableColumn prefWidth="125.0" text="Inventory Level" />
+                        <TableColumn prefWidth="75.0" text="Price/Cost per Unit" />
                     </columns>
                   </TableView>
                   <HBox alignment="CENTER_RIGHT" prefHeight="40.0" prefWidth="300.0">
@@ -89,7 +89,66 @@
                <GridPane.margin>
                   <Insets left="50.0" right="25.0" />
                </GridPane.margin></VBox>
-            <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <VBox layoutX="60.0" layoutY="60.0" prefHeight="300.0" prefWidth="450.0" style="-fx-border-radius: 5; -fx-border-color: black;" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <children>
+                  <StackPane prefHeight="34.0" prefWidth="300.0">
+                     <children>
+                        <Label text="Products" StackPane.alignment="BOTTOM_LEFT">
+                           <StackPane.margin>
+                              <Insets left="10.0" />
+                           </StackPane.margin>
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <TextField maxWidth="-Infinity" prefHeight="27.0" prefWidth="225.0" promptText="Search by product ID or name" StackPane.alignment="BOTTOM_RIGHT">
+                           <StackPane.margin>
+                              <Insets right="20.0" />
+                           </StackPane.margin>
+                        </TextField>
+                     </children>
+                     <padding>
+                        <Insets bottom="5.0" top="10.0" />
+                     </padding>
+                  </StackPane>
+                  <TableView prefHeight="250.0" prefWidth="400.0">
+                     <columns>
+                        <TableColumn prefWidth="75.0" text="Product ID" />
+                        <TableColumn prefWidth="100.0" text="Product Name" />
+                        <TableColumn prefWidth="125.0" text="Inventory Level" />
+                        <TableColumn prefWidth="75.0" text="Price/Cost per Unit" />
+                     </columns>
+                  </TableView>
+                  <HBox alignment="CENTER_RIGHT" prefHeight="40.0" prefWidth="300.0">
+                     <children>
+                        <Button mnemonicParsing="false" text="Add">
+                           <HBox.margin>
+                              <Insets right="10.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button mnemonicParsing="false" text="Modify">
+                           <HBox.margin>
+                              <Insets right="10.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button mnemonicParsing="false" text="Delete">
+                           <HBox.margin>
+                              <Insets right="10.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <VBox.margin>
+                        <Insets bottom="10.0" top="10.0" />
+                     </VBox.margin>
+                  </HBox>
+               </children>
+               <GridPane.margin>
+                  <Insets left="25.0" right="50.0" />
+               </GridPane.margin>
+            </VBox>
          </children>
       </GridPane>
    </children>
