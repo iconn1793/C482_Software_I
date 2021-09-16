@@ -26,7 +26,7 @@
                   <Insets left="25.0" />
                </GridPane.margin>
             </Label>
-            <Button fx:id="mainExitButton" mnemonicParsing="false" text="Exit" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
+            <Button fx:id="mainExitButton" mnemonicParsing="false" onAction="#onExitBtn" text="Exit" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
                <GridPane.margin>
                   <Insets right="75.0" />
                </GridPane.margin></Button>
@@ -42,7 +42,7 @@
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="partSearchbar" maxWidth="-Infinity" prefHeight="27.0" prefWidth="225.0" promptText="Search by part ID or name" StackPane.alignment="BOTTOM_RIGHT">
+                        <TextField fx:id="partSearchbar" maxWidth="-Infinity" onAction="#onPartSearch" prefHeight="27.0" prefWidth="225.0" promptText="Search by part ID or name" StackPane.alignment="BOTTOM_RIGHT">
                            <StackPane.margin>
                               <Insets right="20.0" />
                            </StackPane.margin>
@@ -52,7 +52,7 @@
                         <Insets bottom="5.0" top="10.0" />
                      </padding>
                   </StackPane>
-                  <TableView prefHeight="250.0" prefWidth="400.0">
+                  <TableView fx:id="partTable" prefHeight="250.0" prefWidth="400.0">
                     <columns>
                       <TableColumn fx:id="partIdColumn" prefWidth="75.0" text="Part ID" />
                       <TableColumn fx:id="partNameColumn" prefWidth="100.0" text="Part Name" />
@@ -62,17 +62,17 @@
                   </TableView>
                   <HBox alignment="CENTER_RIGHT" prefHeight="40.0" prefWidth="300.0">
                      <children>
-                        <Button fx:id="partAddButton" mnemonicParsing="false" text="Add">
+                        <Button fx:id="partAddButton" mnemonicParsing="false" onAction="#onAddPartBtn" text="Add">
                            <HBox.margin>
                               <Insets right="10.0" />
                            </HBox.margin>
                         </Button>
-                        <Button fx:id="partModifyButton" mnemonicParsing="false" text="Modify">
+                        <Button fx:id="partModifyButton" mnemonicParsing="false" onAction="#onModifyPartBtn" text="Modify">
                            <HBox.margin>
                               <Insets right="10.0" />
                            </HBox.margin>
                         </Button>
-                        <Button fx:id="partDeleteButton" mnemonicParsing="false" text="Delete">
+                        <Button fx:id="partDeleteButton" mnemonicParsing="false" onAction="#onDeletePartBtn" text="Delete">
                            <HBox.margin>
                               <Insets right="10.0" />
                            </HBox.margin>
@@ -101,7 +101,7 @@
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="productSearchbar" maxWidth="-Infinity" prefHeight="27.0" prefWidth="225.0" promptText="Search by product ID or name" StackPane.alignment="BOTTOM_RIGHT">
+                        <TextField fx:id="productSearchbar" maxWidth="-Infinity" onAction="#onProductSearch" prefHeight="27.0" prefWidth="225.0" promptText="Search by product ID or name" StackPane.alignment="BOTTOM_RIGHT">
                            <StackPane.margin>
                               <Insets right="20.0" />
                            </StackPane.margin>
@@ -111,7 +111,7 @@
                         <Insets bottom="5.0" top="10.0" />
                      </padding>
                   </StackPane>
-                  <TableView prefHeight="250.0" prefWidth="400.0">
+                  <TableView fx:id="productTable" prefHeight="250.0" prefWidth="400.0">
                      <columns>
                         <TableColumn fx:id="productIdColumn" prefWidth="75.0" text="Product ID" />
                         <TableColumn fx:id="productNameColumn" prefWidth="100.0" text="Product Name" />
@@ -121,17 +121,17 @@
                   </TableView>
                   <HBox alignment="CENTER_RIGHT" prefHeight="40.0" prefWidth="300.0">
                      <children>
-                        <Button fx:id="productAddButton" mnemonicParsing="false" text="Add">
+                        <Button fx:id="productAddButton" mnemonicParsing="false" onAction="#onAddProductBtn" text="Add">
                            <HBox.margin>
                               <Insets right="10.0" />
                            </HBox.margin>
                         </Button>
-                        <Button fx:id="productModifyButton" mnemonicParsing="false" text="Modify">
+                        <Button fx:id="productModifyButton" mnemonicParsing="false" onAction="#onModifyProductBtn" text="Modify">
                            <HBox.margin>
                               <Insets right="10.0" />
                            </HBox.margin>
                         </Button>
-                        <Button fx:id="productDeleteButton" mnemonicParsing="false" text="Delete">
+                        <Button fx:id="productDeleteButton" mnemonicParsing="false" onAction="#onDeleteProductBtn" text="Delete">
                            <HBox.margin>
                               <Insets right="10.0" />
                            </HBox.margin>

@@ -11,7 +11,7 @@
          <children>
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Label text="Modify Part">
+                  <Label fx:id="partFormTitle" text="Modify Part">
                      <HBox.margin>
                         <Insets left="50.0" />
                      </HBox.margin>
@@ -19,12 +19,12 @@
                         <Font name="System Bold" size="13.0" />
                      </font>
                   </Label>
-                  <RadioButton fx:id="inHouseRadioButton" mnemonicParsing="false" text="In-House">
+                  <RadioButton fx:id="inHouseRadioButton" mnemonicParsing="false" onAction="#onInHouseBtn" text="In-House">
                      <HBox.margin>
                         <Insets left="30.0" />
                      </HBox.margin>
                   </RadioButton>
-                  <RadioButton fx:id="outsourcedRadioButton" mnemonicParsing="false" text="Outsourced">
+                  <RadioButton fx:id="outsourcedRadioButton" mnemonicParsing="false" onAction="#onOutsourcedBtn" text="Outsourced">
                      <HBox.margin>
                         <Insets left="30.0" />
                      </HBox.margin>
@@ -59,7 +59,7 @@
                   <Label text="Inventory" GridPane.rowIndex="2" />
                   <Label text="Price/Cost" GridPane.rowIndex="3" />
                   <Label text="Max" GridPane.rowIndex="4" />
-                  <Label text="Machine ID" GridPane.rowIndex="5" />
+                  <Label fx:id="flexibleLabel" text="Machine ID" GridPane.rowIndex="5" />
                   <TextField fx:id="maxTextField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                   <TextField fx:id="flexibleTextField" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                   <Label text="Min" GridPane.columnIndex="2" GridPane.rowIndex="4">
@@ -75,11 +75,11 @@
             </GridPane>
             <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Button fx:id="saveButton" mnemonicParsing="false" text="Save">
+                  <Button fx:id="saveButton" mnemonicParsing="false" onAction="#onSaveBtn" text="Save">
                      <HBox.margin>
                         <Insets right="25.0" />
                      </HBox.margin></Button>
-                  <Button fx:id="cancelButton" mnemonicParsing="false" text="Cancel">
+                  <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#onCancelBtn" text="Cancel">
                      <HBox.margin>
                         <Insets right="150.0" />
                      </HBox.margin></Button>
