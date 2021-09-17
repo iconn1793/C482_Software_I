@@ -19,12 +19,15 @@
                         <Font name="System Bold" size="13.0" />
                      </font>
                   </Label>
-                  <RadioButton fx:id="inHouseRadioButton" mnemonicParsing="false" onAction="#onInHouseBtn" text="In-House">
+                  <RadioButton fx:id="inHouseRadioButton" mnemonicParsing="false" onAction="#onInHouseBtn" selected="true" text="In-House">
                      <HBox.margin>
                         <Insets left="30.0" />
                      </HBox.margin>
+                     <toggleGroup>
+                        <ToggleGroup fx:id="partToggleGroup" />
+                     </toggleGroup>
                   </RadioButton>
-                  <RadioButton fx:id="outsourcedRadioButton" mnemonicParsing="false" onAction="#onOutsourcedBtn" text="Outsourced">
+                  <RadioButton fx:id="outsourcedRadioButton" mnemonicParsing="false" onAction="#onOutsourcedBtn" text="Outsourced" toggleGroup="$partToggleGroup">
                      <HBox.margin>
                         <Insets left="30.0" />
                      </HBox.margin>

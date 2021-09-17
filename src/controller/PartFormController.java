@@ -11,6 +11,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import model.InHouse;
+import model.Inventory;
+import model.Outsourced;
 import model.Part;
 
 import java.net.URL;
@@ -32,9 +35,6 @@ public class PartFormController implements Initializable {
     public Label flexibleLabel;
     public Label partFormTitle;
 
-    public static LinkedList<Part> partsList = new LinkedList<Part>();
-    private static int partIndex = 0;
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setAddPartState();
@@ -51,10 +51,19 @@ public class PartFormController implements Initializable {
     public void onSaveBtn(ActionEvent actionEvent) {
         try {
             validateInputs();
-            //create/save/modify part
+            // determine if in add or modify
+            if (inHouseRadioButton.isSelected()) {
+                InHouse newPart = new InHouse(Inventory.getNextPartIndex(), nameTextField.getText(), Double.parseDouble(priceTextField.getText()), Integer.parseInt(inventoryTextField.getText()), Integer.parseInt(minTextField.getText()), Integer.parseInt(maxTextField.getText()), Integer.parseInt(flexibleTextField.getText()));
+                Inventory.addPart(newPart);
+                System.out.println("Added InHouse Part");
+            } else {
+                Outsourced newPart = new Outsourced(Inventory.getNextPartIndex(), nameTextField.getText(), Double.parseDouble(priceTextField.getText()), Integer.parseInt(inventoryTextField.getText()), Integer.parseInt(minTextField.getText()), Integer.parseInt(maxTextField.getText()), flexibleTextField.getText());
+                Inventory.addPart(newPart);
+                System.out.println("Added Outsourced Part");
+            }
             navigateToMainMenu(actionEvent, "Main Menu");
         } catch (Exception e) {
-            System.out.println("Exception " + e.getMessage());
+            System.out.println(e.getMessage());
         }
 
     }
@@ -84,14 +93,10 @@ public class PartFormController implements Initializable {
     }
 
     private void setInHouseState() {
-        outsourcedRadioButton.setSelected(false);
-        inHouseRadioButton.setSelected(true);
         flexibleLabel.setText("Machine ID");
     }
 
     private void setOutsourcedState() {
-        outsourcedRadioButton.setSelected(true);
-        inHouseRadioButton.setSelected(false);
         flexibleLabel.setText("Company Name");
     }
 

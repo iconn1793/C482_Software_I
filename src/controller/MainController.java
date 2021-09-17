@@ -9,9 +9,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import javafx.scene.Node;
+import model.InHouse;
+import model.Inventory;
+import model.Part;
 
 import javax.swing.*;
 import java.io.IOException;
@@ -47,7 +51,17 @@ public class MainController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        partTable.setItems(Inventory.getAllParts());
+        partIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        partNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        partInventoryColumn.setCellValueFactory(new PropertyValueFactory<>("stock"));
+        partPriceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
 
+        productTable.setItems(Inventory.getAllProducts());
+        productIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        productNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        productInventoryColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        productPriceColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
     }
 
     // PART METHODS
@@ -60,9 +74,19 @@ public class MainController implements Initializable {
     }
 
     public void onModifyPartBtn(ActionEvent actionEvent) {
+        Part part = (Part)partTable.getSelectionModel().getSelectedItem();
+        if (part == null) {
+            return;
+        }
+
     }
 
     public void onDeletePartBtn(ActionEvent actionEvent) {
+        Part part = (Part)partTable.getSelectionModel().getSelectedItem();
+        if (part == null) {
+            return;
+        }
+        Inventory.deletePart(part);
     }
 
     // PRODUCT METHODS
