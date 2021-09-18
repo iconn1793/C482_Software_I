@@ -78,7 +78,7 @@ public class MainController implements Initializable {
         if (part == null) {
             return;
         }
-
+        navigateToPartsForm(actionEvent, "Modifying Part", true, part);
     }
 
     public void onDeletePartBtn(ActionEvent actionEvent) {
@@ -97,6 +97,7 @@ public class MainController implements Initializable {
     }
 
     public void onModifyProductBtn(ActionEvent actionEvent) {
+
     }
 
     public void onDeleteProductBtn(ActionEvent actionEvent) {
@@ -110,9 +111,14 @@ public class MainController implements Initializable {
     }
 
     // NAV HELPERS
-    public void navigateToPartsForm(ActionEvent event, String title) {
+    // TODO: Refactor title to be automated based on bool flag
+    public void navigateToPartsForm(ActionEvent event, String title, Boolean isModifyingPart, Part part) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/view/PartForm.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/PartForm.fxml"));
+            Parent root = loader.load();
+            PartFormController partController = loader.getController();
+            partController.setFormState(isModifyingPart, part);
+
             Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
             stage.setTitle(title);
             stage.setScene(new Scene(root, 700, 500));
@@ -120,5 +126,10 @@ public class MainController implements Initializable {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    // Overloaded to default to Add Part Form state
+    public void navigateToPartsForm(ActionEvent event, String title) {
+        navigateToPartsForm(event, title, false, null);
     }
 }
