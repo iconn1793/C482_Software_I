@@ -1,14 +1,151 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="controller.ProductFormController"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane prefHeight="400.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ProductFormController">
+   <children>
+      <VBox prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <StackPane prefHeight="72.0" prefWidth="600.0">
+               <children>
+                  <Label text="Add Product" StackPane.alignment="BOTTOM_LEFT">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                     <StackPane.margin>
+                        <Insets bottom="10.0" left="10.0" />
+                     </StackPane.margin>
+                  </Label>
+                  <TextField maxWidth="-Infinity" prefHeight="27.0" prefWidth="250.0" promptText="Search by Part ID or Name" StackPane.alignment="CENTER_RIGHT">
+                     <StackPane.margin>
+                        <Insets left="375.0" right="25.0" />
+                     </StackPane.margin>
+                  </TextField>
+               </children></StackPane>
+            <HBox prefHeight="328.0" prefWidth="600.0">
+               <children>
+                  <VBox prefHeight="310.0" prefWidth="350.0">
+                     <children>
+                        <GridPane>
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="170.0" minWidth="75.0" prefWidth="86.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="266.0" minWidth="10.0" prefWidth="264.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <Label text="ID" />
+                              <Label text="Name" GridPane.rowIndex="1" />
+                              <TextField prefHeight="27.0" prefWidth="173.0" GridPane.columnIndex="1" />
+                              <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                           </children>
+                           <VBox.margin>
+                              <Insets right="125.0" />
+                           </VBox.margin>
+                        </GridPane>
+                        <GridPane>
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="75.0" prefWidth="75.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="107.0" minWidth="10.0" prefWidth="105.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="87.0" minWidth="10.0" prefWidth="50.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="123.0" minWidth="10.0" prefWidth="123.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <Label text="Inv" />
+                              <Label text="Price" GridPane.rowIndex="1" />
+                              <Label text="Max" GridPane.rowIndex="2" />
+                              <Label text="Min" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                              <TextField GridPane.columnIndex="1">
+                                 <GridPane.margin>
+                                    <Insets right="25.0" />
+                                 </GridPane.margin></TextField>
+                              <TextField GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                 <GridPane.margin>
+                                    <Insets right="25.0" />
+                                 </GridPane.margin></TextField>
+                              <TextField GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                 <GridPane.margin>
+                                    <Insets right="25.0" />
+                                 </GridPane.margin></TextField>
+                              <TextField GridPane.columnIndex="3" GridPane.rowIndex="2">
+                                 <GridPane.margin>
+                                    <Insets right="50.0" />
+                                 </GridPane.margin></TextField>
+                           </children>
+                        </GridPane>
+                     </children>
+                     <HBox.margin>
+                        <Insets left="25.0" />
+                     </HBox.margin></VBox>
+                  <VBox prefHeight="310.0" prefWidth="350.0">
+                     <children>
+                        <TableView prefHeight="109.0" prefWidth="302.0">
+                          <columns>
+                            <TableColumn fx:id="partIdColumn" minWidth="50.0" prefWidth="75.0" text="Part ID" />
+                            <TableColumn fx:id="partNameColumn" minWidth="80.0" prefWidth="75.0" text="Part Name" />
+                              <TableColumn fx:id="partInventoryColumn" minWidth="80.0" prefWidth="75.0" text="Inventory Level" />
+                              <TableColumn fx:id="partPriceColumn" minWidth="90.0" prefWidth="75.0" text="Price/Cost per Unit" />
+                          </columns>
+                        </TableView>
+                        <HBox alignment="CENTER_RIGHT" prefHeight="29.0" prefWidth="350.0">
+                           <children>
+                              <Button alignment="CENTER_RIGHT" mnemonicParsing="false" text="Add">
+                                 <HBox.margin>
+                                    <Insets bottom="20.0" top="10.0" />
+                                 </HBox.margin>
+                              </Button>
+                           </children></HBox>
+                        <TableView prefHeight="143.0" prefWidth="302.0">
+                          <columns>
+                            <TableColumn minWidth="50.0" prefWidth="75.0" text="Part ID" />
+                            <TableColumn minWidth="80.0" prefWidth="75.0" text="Part Name" />
+                              <TableColumn minWidth="80.0" prefWidth="75.0" text="Inventory Level" />
+                              <TableColumn minWidth="90.0" prefWidth="75.0" text="Price/Cost per Unit" />
+                          </columns>
+                        </TableView>
+                        <HBox alignment="CENTER_RIGHT" prefHeight="21.0" prefWidth="277.0">
+                           <children>
+                              <Button alignment="CENTER_RIGHT" mnemonicParsing="false" text="Remove Associated Part">
+                                 <HBox.margin>
+                                    <Insets bottom="10.0" top="10.0" />
+                                 </HBox.margin>
+                              </Button>
+                           </children></HBox>
+                     </children>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <padding>
+                        <Insets right="25.0" />
+                     </padding>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </VBox>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_RIGHT" prefHeight="54.0" prefWidth="600.0">
+               <children>
+                  <Button mnemonicParsing="false" text="Save">
+                     <HBox.margin>
+                        <Insets right="60.0" />
+                     </HBox.margin></Button>
+                  <Button mnemonicParsing="false" text="Cancel" />
+               </children>
+               <VBox.margin>
+                  <Insets right="25.0" />
+               </VBox.margin></HBox>
+         </children>
+      </VBox>
+   </children>
 </AnchorPane>

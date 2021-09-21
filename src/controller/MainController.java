@@ -16,6 +16,7 @@ import javafx.scene.Node;
 import model.InHouse;
 import model.Inventory;
 import model.Part;
+import model.Product;
 
 import javax.swing.*;
 import java.io.IOException;
@@ -94,6 +95,7 @@ public class MainController implements Initializable {
     }
 
     public void onAddProductBtn(ActionEvent actionEvent) {
+        navigateToProductForm(actionEvent, "Adding Product");
     }
 
     public void onModifyProductBtn(ActionEvent actionEvent) {
@@ -112,12 +114,12 @@ public class MainController implements Initializable {
 
     // NAV HELPERS
     // TODO: Refactor title to be automated based on bool flag
-    public void navigateToPartsForm(ActionEvent event, String title, Boolean isModifyingPart, Part part) {
+    public void navigateToPartsForm(ActionEvent event, String title, Boolean isModifying, Part part) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/PartForm.fxml"));
             Parent root = loader.load();
             PartFormController partController = loader.getController();
-            partController.setFormState(isModifyingPart, part);
+            partController.setFormState(isModifying, part);
 
             Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
             stage.setTitle(title);
@@ -131,5 +133,27 @@ public class MainController implements Initializable {
     // Overloaded to default to Add Part Form state
     public void navigateToPartsForm(ActionEvent event, String title) {
         navigateToPartsForm(event, title, false, null);
+    }
+
+    public void navigateToProductForm(ActionEvent event, String title, Boolean isModifying, Product product) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/ProductForm.fxml"));
+            Parent root = loader.load();
+            ProductFormController productFormController = loader.getController();
+            //partController.setFormState(isModifying, product);
+
+            Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+            stage.setTitle(title);
+            stage.setScene(new Scene(root, 1000, 500));
+            stage.show();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+    }
+
+    // Overloaded to default to Add Part Form state
+    public void navigateToProductForm (ActionEvent event, String title) {
+        navigateToProductForm(event, title, false, null);
     }
 }
