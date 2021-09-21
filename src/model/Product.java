@@ -1,11 +1,12 @@
 package model;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class Product {
 
     // VARIABLES //
-    private ObservableList<Part> _associatedParts;
+    private ObservableList<Part> _associatedParts = FXCollections.observableArrayList();
     private int _id;
     private String _name;
     private double _price;
@@ -13,14 +14,27 @@ public class Product {
     private int _min;
     private int _max;
 
-    // MODIFYING FUNCTIONS //
-    public void addAssociatedPart(Part part) {
-        // TODO Implement
+    public Product(int id, String name, double price, int stock, int min, int max) {
+        _id = id;
+        _name = name;
+        _price = price;
+        _stock = stock;
+        _min = min;
+        _max = max;
     }
 
-    public Boolean deleteAssocaitedPart(Part selectedAssociatedPart) {
-        // TODO Implement
-        return true;
+    // MODIFYING FUNCTIONS //
+    public void addAssociatedPart(Part part) {
+        _associatedParts.add(part);
+    }
+
+    public Boolean deleteAssociatedPart(Part selectedAssociatedPart) {
+        try {
+            return _associatedParts.removeIf( (p) -> p.getId() == selectedAssociatedPart.getId() );
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
     }
 
     // GETTERS //

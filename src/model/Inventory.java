@@ -15,9 +15,7 @@ public class Inventory {
     public static void addPart(Part newPart) {
         _allParts.add(newPart);
     }
-    public static void addProduct(Product newProduct) {
-        _allProducts.add(newProduct);
-    }
+    public static void addProduct(Product newProduct) { _allProducts.add(newProduct); }
 //    public Part lookupPart(int partId) {
 //
 //    }

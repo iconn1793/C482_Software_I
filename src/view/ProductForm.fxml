@@ -95,7 +95,7 @@
                      </HBox.margin></VBox>
                   <VBox prefHeight="310.0" prefWidth="1000.0">
                      <children>
-                        <TableView prefHeight="109.0" prefWidth="302.0">
+                        <TableView fx:id="inventoryPartsTableView" prefHeight="145.0" prefWidth="302.0">
                           <columns>
                             <TableColumn fx:id="partIdColumn" minWidth="50.0" prefWidth="75.0" text="Part ID" />
                             <TableColumn fx:id="partNameColumn" minWidth="80.0" prefWidth="75.0" text="Part Name" />
@@ -108,13 +108,13 @@
                         </TableView>
                         <HBox alignment="CENTER_RIGHT" prefHeight="29.0" prefWidth="350.0">
                            <children>
-                              <Button fx:id="addPartBtn" alignment="CENTER_RIGHT" mnemonicParsing="false" text="Add">
+                              <Button fx:id="addPartBtn" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#onAddPartBtn" text="Add">
                                  <HBox.margin>
                                     <Insets bottom="20.0" top="10.0" />
                                  </HBox.margin>
                               </Button>
                            </children></HBox>
-                        <TableView prefHeight="143.0" prefWidth="302.0">
+                        <TableView fx:id="associatedPartsTableView" prefHeight="145.0" prefWidth="302.0">
                           <columns>
                             <TableColumn fx:id="assocPartIdColumn" minWidth="50.0" prefWidth="75.0" text="Part ID" />
                             <TableColumn fx:id="assocPartNameColumn" minWidth="80.0" prefWidth="75.0" text="Part Name" />
@@ -127,7 +127,7 @@
                         </TableView>
                         <HBox alignment="CENTER_RIGHT" prefHeight="21.0" prefWidth="277.0">
                            <children>
-                              <Button fx:id="removePartButton" alignment="CENTER_RIGHT" mnemonicParsing="false" text="Remove Associated Part">
+                              <Button fx:id="removePartButton" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#onRemovePartBtn" text="Remove Associated Part">
                                  <HBox.margin>
                                     <Insets bottom="10.0" top="10.0" />
                                  </HBox.margin>
@@ -148,11 +148,11 @@
             </HBox>
             <HBox alignment="CENTER_RIGHT" prefHeight="54.0" prefWidth="600.0">
                <children>
-                  <Button fx:id="saveBtn" mnemonicParsing="false" text="Save">
+                  <Button fx:id="saveBtn" mnemonicParsing="false" onAction="#onSaveBtn" text="Save">
                      <HBox.margin>
                         <Insets right="60.0" />
                      </HBox.margin></Button>
-                  <Button fx:id="cancelBtn" mnemonicParsing="false" text="Cancel" />
+                  <Button fx:id="cancelBtn" mnemonicParsing="false" onAction="#onCancelBtn" text="Cancel" />
                </children>
                <VBox.margin>
                   <Insets right="25.0" />

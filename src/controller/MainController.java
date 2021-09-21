@@ -61,8 +61,8 @@ public class MainController implements Initializable {
         productTable.setItems(Inventory.getAllProducts());
         productIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         productNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
-        productInventoryColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
-        productPriceColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        productInventoryColumn.setCellValueFactory(new PropertyValueFactory<>("stock"));
+        productPriceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
     }
 
     // PART METHODS
@@ -79,7 +79,7 @@ public class MainController implements Initializable {
         if (part == null) {
             return;
         }
-        navigateToPartsForm(actionEvent, "Modifying Part", true, part);
+        navigateToPartsForm(actionEvent, true, part);
     }
 
     public void onDeletePartBtn(ActionEvent actionEvent) {
@@ -95,14 +95,23 @@ public class MainController implements Initializable {
     }
 
     public void onAddProductBtn(ActionEvent actionEvent) {
-        navigateToProductForm(actionEvent, "Adding Product");
+        navigateToProductForm(actionEvent);
     }
 
     public void onModifyProductBtn(ActionEvent actionEvent) {
-
+        Product product = (Product)productTable.getSelectionModel().getSelectedItem();
+        if (product == null) {
+            return;
+        }
+        navigateToProductForm(actionEvent, true, product);
     }
 
     public void onDeleteProductBtn(ActionEvent actionEvent) {
+        Product product = (Product)partTable.getSelectionModel().getSelectedItem();
+        if (product == null) {
+            return;
+        }
+        Inventory.deleteProduct(product);
     }
 
     // NAVIGATION METHODS
@@ -113,8 +122,7 @@ public class MainController implements Initializable {
     }
 
     // NAV HELPERS
-    // TODO: Refactor title to be automated based on bool flag
-    public void navigateToPartsForm(ActionEvent event, String title, Boolean isModifying, Part part) {
+    public void navigateToPartsForm(ActionEvent event, Boolean isModifying, Part part) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/PartForm.fxml"));
             Parent root = loader.load();
@@ -122,7 +130,11 @@ public class MainController implements Initializable {
             partController.setFormState(isModifying, part);
 
             Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-            stage.setTitle(title);
+            if (isModifying) {
+                stage.setTitle("Modify Part");
+            } else {
+                stage.setTitle("Add Part");
+            }
             stage.setScene(new Scene(root, 700, 500));
             stage.show();
         } catch (Exception e) {
@@ -132,18 +144,22 @@ public class MainController implements Initializable {
 
     // Overloaded to default to Add Part Form state
     public void navigateToPartsForm(ActionEvent event, String title) {
-        navigateToPartsForm(event, title, false, null);
+        navigateToPartsForm(event, false, null);
     }
 
-    public void navigateToProductForm(ActionEvent event, String title, Boolean isModifying, Product product) {
+    public void navigateToProductForm(ActionEvent event, Boolean isModifying, Product product) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/ProductForm.fxml"));
             Parent root = loader.load();
             ProductFormController productFormController = loader.getController();
-            //partController.setFormState(isModifying, product);
+            productFormController.setFormState(isModifying, product);
 
             Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-            stage.setTitle(title);
+            if (isModifying) {
+                stage.setTitle("Modify Product");
+            } else {
+                stage.setTitle("Add Product");
+            }
             stage.setScene(new Scene(root, 1000, 500));
             stage.show();
         } catch (Exception e) {
@@ -153,7 +169,7 @@ public class MainController implements Initializable {
     }
 
     // Overloaded to default to Add Part Form state
-    public void navigateToProductForm (ActionEvent event, String title) {
-        navigateToProductForm(event, title, false, null);
+    public void navigateToProductForm (ActionEvent event) {
+        navigateToProductForm(event, false, null);
     }
 }

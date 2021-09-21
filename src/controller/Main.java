@@ -8,6 +8,7 @@ import javafx.stage.Stage;
 import model.InHouse;
 import model.Inventory;
 import model.Outsourced;
+import model.Product;
 
 
 public class Main extends Application {
@@ -19,7 +20,8 @@ public class Main extends Application {
         primaryStage.setScene(new Scene(root, 1000, 500));
         primaryStage.show();
 
-        Inventory.addPart(new Outsourced(1, "testName", 100, 2, 1, 45, "Dovahkin"));
+        Inventory.addPart(new Outsourced(0, "testName", 100, 2, 1, 45, "Dovahkin"));
+        Inventory.addProduct(new Product(0, "testProd", 1000, 20, 1, 30));
     }
 
 
