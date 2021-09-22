@@ -225,6 +225,12 @@ public class ProductFormController implements Initializable {
                 //ignore
             }
         }
-        inventoryPartsTableView.setItems(invSearchResults);
+        if (invSearchResults.size()  !=  0) {
+            inventoryPartsTableView.setItems(invSearchResults);
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("No parts found.");
+            alert.showAndWait();
+        }
     }
 }
