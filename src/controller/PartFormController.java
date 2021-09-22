@@ -6,10 +6,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import model.InHouse;
 import model.Inventory;
@@ -70,7 +67,9 @@ public class PartFormController implements Initializable {
             }
             navigateToMainMenu(actionEvent, "Main Menu");
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
         }
     }
 
@@ -157,9 +156,11 @@ public class PartFormController implements Initializable {
         }
     }
 
+    // Todo: future improvmeent to add validation on flex field
     private void validateInputs() throws IllegalArgumentException {
         Float maxValue;
         Float minValue;
+        Float stockValue;
 
         try {
             Float.isNaN(Float.parseFloat(maxTextField.getText()));
@@ -169,15 +170,31 @@ public class PartFormController implements Initializable {
         }
 
         try {
-            Float.isNaN(Float.parseFloat(maxTextField.getText()));
+            Float.isNaN(Float.parseFloat(minTextField.getText()));
             minValue = Float.parseFloat(minTextField.getText());
         } catch (Exception e) {
             throw new IllegalArgumentException("Invalid Input: Min value must be an integer");
+        }
+
+        try {
+            Float.isNaN(Float.parseFloat(inventoryTextField.getText()));
+            stockValue = Float.parseFloat(inventoryTextField.getText());
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Invalid Input: Inventory value must be an integer");
+        }
+
+        try {
+            Float.isNaN(Float.parseFloat(priceTextField.getText()));
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Invalid Input: Price value must be a number");
         }
 
         if (minValue > maxValue) {
             throw new IllegalArgumentException("Invalid Input: Min value must be less than Max value.");
         }
 
+        if ( stockValue > maxValue || stockValue < minValue) {
+            throw new IllegalArgumentException("Invalid Input: Stock value must be between Min and Max values.");
+        }
     }
 }

@@ -1,14 +1,13 @@
 package controller;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
@@ -21,6 +20,7 @@ import model.Product;
 import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
@@ -67,7 +67,20 @@ public class MainController implements Initializable {
 
     // PART METHODS
     public void onPartSearch(ActionEvent actionEvent) {
-        System.out.println("Searched!");
+        String searchTerm = partSearchbar.getText();
+        ObservableList<Part> searchResults = FXCollections.observableArrayList();
+        searchResults.addAll(Inventory.lookupPart(searchTerm));
+        for (Part p : Inventory.getAllParts()
+        ) {
+            try {
+                if (String.valueOf(p.getId()).contains(searchTerm)) {
+                    searchResults.add(Inventory.lookupPart(Integer.parseInt(searchTerm)));
+                }
+            } catch (Exception e) {
+                //ignore
+            }
+        }
+        partTable.setItems(searchResults);
     }
 
     public void onAddPartBtn(ActionEvent actionEvent) {
@@ -87,11 +100,30 @@ public class MainController implements Initializable {
         if (part == null) {
             return;
         }
-        Inventory.deletePart(part);
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to permanently delete this part?");
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            Inventory.deletePart(part);
+        }
     }
 
     // PRODUCT METHODS
+    // TODO: got runtime error on a number format exception on null input
     public void onProductSearch(ActionEvent actionEvent) {
+        String searchTerm = productSearchbar.getText();
+        ObservableList<Product> searchResults = FXCollections.observableArrayList();
+        searchResults.addAll(Inventory.lookupProduct(searchTerm));
+        for (Product p : Inventory.getAllProducts()
+             ) {
+            try {
+                if (String.valueOf(p.getId()).contains(searchTerm)) {
+                    searchResults.add(Inventory.lookupProduct(Integer.parseInt(searchTerm)));
+                }
+            } catch (Exception e) {
+                //ignore
+            }
+        }
+        productTable.setItems(searchResults);
     }
 
     public void onAddProductBtn(ActionEvent actionEvent) {
@@ -107,11 +139,23 @@ public class MainController implements Initializable {
     }
 
     public void onDeleteProductBtn(ActionEvent actionEvent) {
-        Product product = (Product)partTable.getSelectionModel().getSelectedItem();
+        Product product = (Product)productTable.getSelectionModel().getSelectedItem();
         if (product == null) {
             return;
         }
-        Inventory.deleteProduct(product);
+
+        if (product.getAllAssociatedParts().size() != 0) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Cannot delete a product with associated parts. Please disassociate the parts and try again.");
+            alert.showAndWait();
+            return;
+        }
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to permanently delete this product?");
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            Inventory.deleteProduct(product);
+        }
     }
 
     // NAVIGATION METHODS

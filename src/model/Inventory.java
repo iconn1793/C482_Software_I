@@ -16,24 +16,56 @@ public class Inventory {
         _allParts.add(newPart);
     }
     public static void addProduct(Product newProduct) { _allProducts.add(newProduct); }
-//    public Part lookupPart(int partId) {
-//
-//    }
-//    public Product lookupProduct(int productId) {
-//
-//    }
-//    public ObservableList<Part> lookupPart(String partName){
-//
-//    }
-//    public ObservableList<Product> lookupProduct(String productName) {
-//
-//    }
+
+    public static Part lookupPart(int partId) {
+        for (Part p : _allParts) {
+            if (p.getId() == partId) {
+                return p;
+            }
+        }
+        return null;
+    }
+    public static Product lookupProduct(int productId) {
+        for (Product p : _allProducts) {
+            if (p.getId() == productId) {
+                return p;
+            }
+        }
+        return null;
+    }
+    public static ObservableList<Part> lookupPart(String partName){
+        ObservableList<Part> searchResults = FXCollections.observableArrayList();
+        for (Part p : _allParts) {
+            if (p.getName().contains(partName)) {
+                searchResults.add(p);
+            }
+        }
+        return searchResults;
+    }
+    public static ObservableList<Product> lookupProduct(String productName) {
+        ObservableList<Product> searchResults = FXCollections.observableArrayList();
+        for (Product p : _allProducts) {
+            if (p.getName().contains(productName)) {
+                searchResults.add(p);
+            }
+        }
+        return searchResults;
+    }
     public static void updatePart(int index, Part selectedPart) {
-        // remove a part
-        // add updated part
+        try {
+            _allParts.remove(index);
+            _allParts.add(selectedPart);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
     public static void updateProduct(int index, Product newProduct) {
-
+        try {
+            _allProducts.remove(index);
+            _allProducts.add(newProduct);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
     public static boolean deletePart(Part selectedPart) {
         try {

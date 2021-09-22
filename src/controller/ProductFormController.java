@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 import model.*;
 
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class ProductFormController implements Initializable {
@@ -82,7 +83,11 @@ public class ProductFormController implements Initializable {
         if (part == null) {
             return;
         }
-        _displayedAssociatedParts.removeIf( (p) -> p.getId() == part.getId() );
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to remove this part?");
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            _displayedAssociatedParts.removeIf( (p) -> p.getId() == part.getId() );
+        }
     }
 
 
@@ -96,7 +101,9 @@ public class ProductFormController implements Initializable {
             }
             navigateToMainMenu(actionEvent, "Main Menu");
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
         }
 
     }
@@ -125,7 +132,9 @@ public class ProductFormController implements Initializable {
             _product.getAllAssociatedParts().removeAll();
             _displayedAssociatedParts.forEach( (part) -> {_product.addAssociatedPart(part);});
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
         }
     }
 
@@ -151,6 +160,7 @@ public class ProductFormController implements Initializable {
     private void validateInputs() throws IllegalArgumentException {
         Float maxValue;
         Float minValue;
+        Float stockValue;
 
         try {
             Float.isNaN(Float.parseFloat(maxTextField.getText()));
@@ -160,14 +170,31 @@ public class ProductFormController implements Initializable {
         }
 
         try {
-            Float.isNaN(Float.parseFloat(maxTextField.getText()));
+            Float.isNaN(Float.parseFloat(minTextField.getText()));
             minValue = Float.parseFloat(minTextField.getText());
         } catch (Exception e) {
             throw new IllegalArgumentException("Invalid Input: Min value must be an integer");
         }
 
+        try {
+            Float.isNaN(Float.parseFloat(inventoryTextField.getText()));
+            stockValue = Float.parseFloat(inventoryTextField.getText());
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Invalid Input: Inventory value must be an integer");
+        }
+
+        try {
+            Float.isNaN(Float.parseFloat(priceTextField.getText()));
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Invalid Input: Price value must be a number");
+        }
+
         if (minValue > maxValue) {
             throw new IllegalArgumentException("Invalid Input: Min value must be less than Max value.");
+        }
+
+        if ( stockValue > maxValue || stockValue < minValue) {
+            throw new IllegalArgumentException("Invalid Input: Inventory value must be between Min and Max values.");
         }
     }
 
@@ -183,4 +210,21 @@ public class ProductFormController implements Initializable {
         }
     }
 
+    // Todo: Future improvement to search through associated parts table
+    public void onSearch(ActionEvent actionEvent) {
+        String searchTerm = searchTextField.getText();
+        ObservableList<Part> invSearchResults = FXCollections.observableArrayList();
+        invSearchResults.addAll(Inventory.lookupPart(searchTerm));
+        for (Part p : Inventory.getAllParts()
+        ) {
+            try {
+                if (String.valueOf(p.getId()).contains(searchTerm)) {
+                    invSearchResults.add(Inventory.lookupPart(Integer.parseInt(searchTerm)));
+                }
+            } catch (Exception e) {
+                //ignore
+            }
+        }
+        inventoryPartsTableView.setItems(invSearchResults);
+    }
 }

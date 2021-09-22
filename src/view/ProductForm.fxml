@@ -19,7 +19,7 @@
                         <Insets bottom="10.0" left="10.0" />
                      </StackPane.margin>
                   </Label>
-                  <TextField fx:id="searchTextField" maxWidth="-Infinity" prefHeight="27.0" prefWidth="250.0" promptText="Search by Part ID or Name" StackPane.alignment="CENTER_RIGHT">
+                  <TextField fx:id="searchTextField" maxWidth="-Infinity" onAction="#onSearch" prefHeight="27.0" prefWidth="250.0" promptText="Search by Part ID or Name" StackPane.alignment="CENTER_RIGHT">
                      <StackPane.margin>
                         <Insets left="375.0" right="25.0" />
                      </StackPane.margin>
