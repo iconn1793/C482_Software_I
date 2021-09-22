@@ -45,6 +45,7 @@ public class Product {
      */
     public Boolean deleteAssociatedPart(Part selectedAssociatedPart) {
         try {
+            System.out.println("Deleting part: " +selectedAssociatedPart.getId());
             return _associatedParts.removeIf( (p) -> p.getId() == selectedAssociatedPart.getId() );
         } catch (Exception e) {
             System.out.println(e.getMessage());

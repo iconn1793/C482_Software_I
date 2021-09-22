@@ -84,10 +84,11 @@ public class ProductFormController implements Initializable {
     }
 
     /**
-     * This method ASSOCIATES the selected part with the current product. FUTURE IMPROVEMENT: Restrict parts from being associated multiple times.
+     * This method ASSOCIATES the selected part with the current product.
      * @Param actionEvent The UI event that triggers the method call.
      */
     public void onAddPartBtn(ActionEvent actionEvent) {
+        // URE IMPROVEMENT: Restrict parts from being associated multiple times.
         Part part = (Part)inventoryPartsTableView.getSelectionModel().getSelectedItem();
         if (part == null) {
             return;
@@ -162,8 +163,8 @@ public class ProductFormController implements Initializable {
         _product.setMin(Integer.parseInt(minTextField.getText()));
         _product.setMax(Integer.parseInt(maxTextField.getText()));
         try {
-            _product.getAllAssociatedParts().removeAll();
-            _displayedAssociatedParts.forEach( (part) -> {_product.addAssociatedPart(part);});
+            _product.getAllAssociatedParts().removeAll(_product.getAllAssociatedParts());
+            _displayedAssociatedParts.forEach( (part) -> { _product.addAssociatedPart(part);});
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText(e.getMessage());
@@ -257,11 +258,11 @@ public class ProductFormController implements Initializable {
     /**
      * This method filters the visible parts in the inventory table to only the parts that have an ID or name that
      * matches or contains the user input search term, or else presents an error dialogue if not results are found.
-     * FUTURE IMPROVEMENT: Apply filtered results to the associated parts table as well as the inventory table
-     * (in case users want to search for specific parts for a product with many associated parts).
      * @Param actionEvent The UI event that triggers the method call.
      */
     public void onSearch(ActionEvent actionEvent) {
+//        URE IMPROVEMENT: Apply filtered results to the associated parts table as well as the inventory table
+//        (in case users want to search for specific parts for a product with many associated parts).
         String searchTerm = searchTextField.getText();
         ObservableList<Part> invSearchResults = FXCollections.observableArrayList();
         invSearchResults.addAll(Inventory.lookupPart(searchTerm));

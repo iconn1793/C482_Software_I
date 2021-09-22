@@ -121,6 +121,9 @@ public class MainController implements Initializable {
     public void onDeletePartBtn(ActionEvent actionEvent) {
         Part part = (Part)partTable.getSelectionModel().getSelectedItem();
         if (part == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Part not deleted: No Part selected.");
+            alert.showAndWait();
             return;
         }
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to permanently delete this part?");
@@ -135,8 +138,9 @@ public class MainController implements Initializable {
      * This method filters the products table for products that have a name or ID that contain or match a user input search query.
      * @Param actionEvent The UI event that triggers the method call.
      */
-    // TODO: got runtime error on a number format exception on null input
     public void onProductSearch(ActionEvent actionEvent) {
+        // RUNTIME ERROR: Initial implementation threw a runtime error when searching for a null query (""). Added
+        // a try/catch block to handle and ignore.
         String searchTerm = productSearchbar.getText();
         ObservableList<Product> searchResults = FXCollections.observableArrayList();
         searchResults.addAll(Inventory.lookupProduct(searchTerm));
@@ -180,12 +184,15 @@ public class MainController implements Initializable {
     public void onDeleteProductBtn(ActionEvent actionEvent) {
         Product product = (Product)productTable.getSelectionModel().getSelectedItem();
         if (product == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Product not deleted: No Product selected.");
+            alert.showAndWait();
             return;
         }
 
         if (product.getAllAssociatedParts().size() != 0) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("Cannot delete a product with associated parts. Please disassociate the parts and try again.");
+            alert.setContentText("Product not deleted: Cannot delete a product with associated parts. Please disassociate the parts and try again.");
             alert.showAndWait();
             return;
         }
