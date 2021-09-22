@@ -91,7 +91,14 @@ public class MainController implements Initializable {
                 //ignore
             }
         }
-        partTable.setItems(searchResults);
+        if (searchResults.size() != 0) {
+            partTable.setItems(searchResults);
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("No parts found.");
+            alert.showAndWait();
+        }
+
     }
 
     /**
@@ -154,7 +161,13 @@ public class MainController implements Initializable {
                 //ignore
             }
         }
-        productTable.setItems(searchResults);
+        if (searchResults.size() != 0) {
+            productTable.setItems(searchResults);
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("No products found.");
+            alert.showAndWait();
+        }
     }
 
     /**

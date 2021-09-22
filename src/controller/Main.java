@@ -5,16 +5,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import model.InHouse;
-import model.Inventory;
-import model.Outsourced;
-import model.Product;
 
 /**
- * This class creates an application for inventory management. This is the main program thread. The Javadoc details
- * may be found in the Javadoc folder at the root level of this project.
+ * This class creates an application for inventory management. This is the main program thread.
  */
 
+// Javadocs may be found in the Javadoc folder at the root level of this project.
 public class Main extends Application {
 
     @Override
@@ -23,11 +19,7 @@ public class Main extends Application {
         primaryStage.setTitle("Inventory Management System");
         primaryStage.setScene(new Scene(root, 1000, 500));
         primaryStage.show();
-
-        Inventory.addPart(new Outsourced(0, "testName", 100, 2, 1, 45, "Dovahkin"));
-        Inventory.addProduct(new Product(0, "testProd", 1000, 20, 1, 30));
     }
-
 
     public static void main(String[] args) {
         launch(args);
