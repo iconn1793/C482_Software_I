@@ -223,9 +223,12 @@ public class MainController implements Initializable {
      * @Param actionEvent The UI event that triggers the method call.
      */
     public void onExitBtn(ActionEvent actionEvent) {
-        System.out.println("Exit Button Pressed -- Closing Application");
-        Stage stage = (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
-        stage.close();
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to quit?");
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            Stage stage = (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
+            stage.close();
+        }
     }
 
     /**

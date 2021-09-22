@@ -88,7 +88,8 @@ public class ProductFormController implements Initializable {
      * @Param actionEvent The UI event that triggers the method call.
      */
     public void onAddPartBtn(ActionEvent actionEvent) {
-        // URE IMPROVEMENT: Restrict parts from being associated multiple times.
+        // FUTURE ENHANCEMENT: Restrict parts from being associated multiple times. Adding a "part count per product"
+        // could allow more advanced production pricing calculation without duplicating memory usage to store the same objects.
         Part part = (Part)inventoryPartsTableView.getSelectionModel().getSelectedItem();
         if (part == null) {
             return;
@@ -261,7 +262,7 @@ public class ProductFormController implements Initializable {
      * @Param actionEvent The UI event that triggers the method call.
      */
     public void onSearch(ActionEvent actionEvent) {
-//        URE IMPROVEMENT: Apply filtered results to the associated parts table as well as the inventory table
+//        FUTURE ENHANCEMENT: Apply results filtering to the associated parts table as well as the inventory table
 //        (in case users want to search for specific parts for a product with many associated parts).
         String searchTerm = searchTextField.getText();
         ObservableList<Part> invSearchResults = FXCollections.observableArrayList();

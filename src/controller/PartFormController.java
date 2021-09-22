@@ -213,8 +213,8 @@ public class PartFormController implements Initializable {
      * @throws IllegalArgumentException Throws an exception whenever a datum does not meet acceptable criteria.
      */
     private void validateInputs() throws IllegalArgumentException {
-        // URE IMPROVEMENT: Add validation on the flex field to enforce String or Number data type according to
-        // InHouse or Outsourced form state.
+        // FU : Add validation on the flex field to enforce String or Number data type according to
+        // InHouse or Outsourced form state. Additionally, requiring name as non-null may prevent later user error.
         Float maxValue;
         Float minValue;
         Float stockValue;
