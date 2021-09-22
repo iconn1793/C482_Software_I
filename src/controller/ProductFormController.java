@@ -17,7 +17,11 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+/**
+ * The controller class for the Add or Modify Product form.
+ */
 public class ProductFormController implements Initializable {
+    // ** UI ELEMENTS ** //
     public Label titleLabel;
     public TextField searchTextField;
     public TextField idTextField;
@@ -41,10 +45,14 @@ public class ProductFormController implements Initializable {
     public TableView inventoryPartsTableView;
     public TableView associatedPartsTableView;
 
+    // ** INTERNAL ELEMENTS ** //
     private Boolean _isModifyForm = false;
     private Product _product;
     private ObservableList<Part> _displayedAssociatedParts = FXCollections.observableArrayList();
 
+    /**
+     * This method overrides the superclass' initialization method.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         inventoryPartsTableView.setItems(Inventory.getAllParts());
@@ -60,8 +68,13 @@ public class ProductFormController implements Initializable {
         assocPriceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
     }
 
-    public void setFormState(boolean isModifyingPart, Product product) {
-        _isModifyForm = isModifyingPart;
+    /**
+     * This method determines whether to set the form UI as the "Add Product" or "Modify Product" UI according to the flag, and stores a reference to a product to modify if any.
+     * @Param isModifyingProduct A boolean to indicate whether to show the Modify Part form (when TRUE) or the Add Part form (when FALSE).
+     * @Param product The product to be modified, if applicable.
+     */
+    public void setFormState(boolean isModifyingProduct, Product product) {
+        _isModifyForm = isModifyingProduct;
         _product = product;
         if (_isModifyForm) {
             setModifyProductState();
@@ -70,6 +83,10 @@ public class ProductFormController implements Initializable {
         }
     }
 
+    /**
+     * This method ASSOCIATES the selected part with the current product. FUTURE IMPROVEMENT: Restrict parts from being associated multiple times.
+     * @Param actionEvent The UI event that triggers the method call.
+     */
     public void onAddPartBtn(ActionEvent actionEvent) {
         Part part = (Part)inventoryPartsTableView.getSelectionModel().getSelectedItem();
         if (part == null) {
@@ -78,6 +95,10 @@ public class ProductFormController implements Initializable {
         _displayedAssociatedParts.add(part);
     }
 
+    /**
+     * This method DISASSOCIATES the selected part with the current product.
+     * @Param actionEvent The UI event that triggers the method call.
+     */
     public void onRemovePartBtn(ActionEvent actionEvent) {
         Part part = (Part)associatedPartsTableView.getSelectionModel().getSelectedItem();
         if (part == null) {
@@ -90,7 +111,10 @@ public class ProductFormController implements Initializable {
         }
     }
 
-
+    /**
+     * This method validates the user input meets acceptable criteria (or presents an error dialogue if not), and saves a new or modified part as applicable.
+     * @Param actionEvent The UI event that triggers the method call.
+     */
     public void onSaveBtn(ActionEvent actionEvent) {
         try {
             validateInputs();
@@ -99,7 +123,7 @@ public class ProductFormController implements Initializable {
             } else {
                 saveModifiedProduct();
             }
-            navigateToMainMenu(actionEvent, "Main Menu");
+            navigateToMainMenu(actionEvent);
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText(e.getMessage());
@@ -107,11 +131,17 @@ public class ProductFormController implements Initializable {
         }
 
     }
-
+    /**
+     * This method closes the product form and navigates back to the main menu without saving the product changes.
+     * @Param actionEvent The UI event that triggers the method call.
+     */
     public void onCancelBtn(ActionEvent actionEvent) {
-        navigateToMainMenu(actionEvent, "Main Menu");
+        navigateToMainMenu(actionEvent);
     }
 
+    /**
+     * This method creates and saves a new product with the data currently entered into the UI fields.
+     */
     private void saveNewProduct() {
         Product newProduct = new Product(Inventory.getNextProductIndex(), nameTextField.getText(), Double.parseDouble(priceTextField.getText()), Integer.parseInt(inventoryTextField.getText()), Integer.parseInt(minTextField.getText()), Integer.parseInt(maxTextField.getText()));
         try {
@@ -122,6 +152,9 @@ public class ProductFormController implements Initializable {
         Inventory.addProduct(newProduct);
     }
 
+    /**
+     * This method saves any changes to a modified product with the data currently entered into the UI fields.
+     */
     private void saveModifiedProduct() {
         _product.setName(nameTextField.getText());
         _product.setPrice(Double.parseDouble(priceTextField.getText()));
@@ -139,7 +172,10 @@ public class ProductFormController implements Initializable {
     }
 
 
-    // Helper functions
+    // ** HELPER FUNCTIONS ** //
+    /**
+     * This method sets the UI to the Modify Product state and populates fields with existing Product Data.
+     */
     private void setModifyProductState() {
         _displayedAssociatedParts.setAll(_product.getAllAssociatedParts());
         titleLabel.setText("Modify Product");
@@ -151,12 +187,20 @@ public class ProductFormController implements Initializable {
         minTextField.setText(String.valueOf(_product.getMin()));
         maxTextField.setText(String.valueOf(_product.getMax()));
     }
+
+    /**
+     * This method sets the UI to the Add Product state.
+     */
     private void setAddProductState() {
         titleLabel.setText("Add Product");
         idTextField.setDisable(true);
         idTextField.setPromptText("Auto Gen. - Disabled");
     }
 
+    /**
+     * This method validates all user inputs meet acceptable criteria or else throws an exception.
+     * @throws IllegalArgumentException Throws an exception whenever a datum does not meet acceptable criteria.
+     */
     private void validateInputs() throws IllegalArgumentException {
         Float maxValue;
         Float minValue;
@@ -198,11 +242,11 @@ public class ProductFormController implements Initializable {
         }
     }
 
-    private void navigateToMainMenu(ActionEvent event, String title) {
+    private void navigateToMainMenu(ActionEvent event) {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/view/MainMenu.fxml"));
             Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-            stage.setTitle(title);
+            stage.setTitle("Inventory Management System");
             stage.setScene(new Scene(root, 1000, 500));
             stage.show();
         } catch (Exception e) {
@@ -210,7 +254,13 @@ public class ProductFormController implements Initializable {
         }
     }
 
-    // Todo: Future improvement to search through associated parts table
+    /**
+     * This method filters the visible parts in the inventory table to only the parts that have an ID or name that
+     * matches or contains the user input search term, or else presents an error dialogue if not results are found.
+     * FUTURE IMPROVEMENT: Apply filtered results to the associated parts table as well as the inventory table
+     * (in case users want to search for specific parts for a product with many associated parts).
+     * @Param actionEvent The UI event that triggers the method call.
+     */
     public void onSearch(ActionEvent actionEvent) {
         String searchTerm = searchTextField.getText();
         ObservableList<Part> invSearchResults = FXCollections.observableArrayList();

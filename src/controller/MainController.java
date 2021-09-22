@@ -23,11 +23,16 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+/**
+ * The controller class for the main menu which appears at the start of the application.
+ */
 public class MainController implements Initializable {
 
+    // ** UI ELEMENTS ** //
+    // GENERAL ELEMENTS //
     public Button mainExitButton;
 
-    // PART ELEMENTS
+    // PART ELEMENTS //
     public TextField partSearchbar;
     public TableView partTable;
     public TableColumn partIdColumn;
@@ -38,7 +43,7 @@ public class MainController implements Initializable {
     public Button partModifyButton;
     public Button partDeleteButton;
 
-    // PRODUCT ELEMENTS
+    // PRODUCT ELEMENTS //
     public TextField productSearchbar;
     public TableView productTable;
     public TableColumn productIdColumn;
@@ -49,7 +54,9 @@ public class MainController implements Initializable {
     public Button productModifyButton;
     public Button productDeleteButton;
 
-
+    /**
+     * This method overrides the superclass' initialization method and sets the Parts and Products database info into UI tables for user interaction.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         partTable.setItems(Inventory.getAllParts());
@@ -65,7 +72,11 @@ public class MainController implements Initializable {
         productPriceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
     }
 
-    // PART METHODS
+    // ** PART METHODS ** //
+    /**
+     * This method filters the parts table for parts that have a name or ID that contain or match a user input search query.
+     * @Param actionEvent The UI event that triggers the method call.
+     */
     public void onPartSearch(ActionEvent actionEvent) {
         String searchTerm = partSearchbar.getText();
         ObservableList<Part> searchResults = FXCollections.observableArrayList();
@@ -83,10 +94,18 @@ public class MainController implements Initializable {
         partTable.setItems(searchResults);
     }
 
+    /**
+     * This method triggers when the Add Part button is pressed.
+     * @Param actionEvent The UI event that triggers the method call.
+     */
     public void onAddPartBtn(ActionEvent actionEvent) {
-        navigateToPartsForm(actionEvent, "Add Part");
+        navigateToPartsForm(actionEvent);
     }
 
+    /**
+     * This method triggers when the Modify Part button is pressed.
+     * @Param actionEvent The UI event that triggers the method call.
+     */
     public void onModifyPartBtn(ActionEvent actionEvent) {
         Part part = (Part)partTable.getSelectionModel().getSelectedItem();
         if (part == null) {
@@ -95,6 +114,10 @@ public class MainController implements Initializable {
         navigateToPartsForm(actionEvent, true, part);
     }
 
+    /**
+     * This method prompts the user with a confirmation dialogue to delete the selected part. This method triggers when the Delete Part button is pressed.
+     * @Param actionEvent The UI event that triggers the method call.
+     */
     public void onDeletePartBtn(ActionEvent actionEvent) {
         Part part = (Part)partTable.getSelectionModel().getSelectedItem();
         if (part == null) {
@@ -107,7 +130,11 @@ public class MainController implements Initializable {
         }
     }
 
-    // PRODUCT METHODS
+    // ** PRODUCT METHODS ** //
+    /**
+     * This method filters the products table for products that have a name or ID that contain or match a user input search query.
+     * @Param actionEvent The UI event that triggers the method call.
+     */
     // TODO: got runtime error on a number format exception on null input
     public void onProductSearch(ActionEvent actionEvent) {
         String searchTerm = productSearchbar.getText();
@@ -126,10 +153,18 @@ public class MainController implements Initializable {
         productTable.setItems(searchResults);
     }
 
+    /**
+     * This method triggers when the Add Product button is pressed, and opens the add product form.
+     * @Param actionEvent The UI event that triggers the method call.
+     */
     public void onAddProductBtn(ActionEvent actionEvent) {
         navigateToProductForm(actionEvent);
     }
 
+    /**
+     * This method triggers when the Modify Product button is pressed, and opens the modify product form.
+     * @Param actionEvent The UI event that triggers the method call.
+     */
     public void onModifyProductBtn(ActionEvent actionEvent) {
         Product product = (Product)productTable.getSelectionModel().getSelectedItem();
         if (product == null) {
@@ -138,6 +173,10 @@ public class MainController implements Initializable {
         navigateToProductForm(actionEvent, true, product);
     }
 
+    /**
+     * This method triggers when the delete product button is pressed, and prompts the user with a confirmation dialogue to delete the selected Product.
+     * @Param actionEvent The UI event that triggers the method call.
+     */
     public void onDeleteProductBtn(ActionEvent actionEvent) {
         Product product = (Product)productTable.getSelectionModel().getSelectedItem();
         if (product == null) {
@@ -158,14 +197,23 @@ public class MainController implements Initializable {
         }
     }
 
-    // NAVIGATION METHODS
+    // ** NAVIGATION METHODS ** //
+    /**
+     * This method closes the application when the exit button is pressed.
+     * @Param actionEvent The UI event that triggers the method call.
+     */
     public void onExitBtn(ActionEvent actionEvent) {
         System.out.println("Exit Button Pressed -- Closing Application");
         Stage stage = (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
         stage.close();
     }
 
-    // NAV HELPERS
+    /**
+     * This method navigates the user to either the Add or Modify Part form as specified.
+     * @Param actionEvent The UI event that triggers the method call.
+     * @Param isModifying A flag that opens the Modify Part form when TRUE, otherwise opens Add Part form.
+     * @Param part The part to be modified, as is relevant. Nullable.
+     */
     public void navigateToPartsForm(ActionEvent event, Boolean isModifying, Part part) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/PartForm.fxml"));
@@ -186,11 +234,20 @@ public class MainController implements Initializable {
         }
     }
 
-    // Overloaded to default to Add Part Form state
-    public void navigateToPartsForm(ActionEvent event, String title) {
+    /**
+     * Overloaded method to make calling navigateToPartsForm() more convenient. This method opens the "Add Part" form only.
+     * @Param actionEvent The UI event that triggers the method call.
+     */
+    public void navigateToPartsForm(ActionEvent event) {
         navigateToPartsForm(event, false, null);
     }
 
+    /**
+     * This method navigates the user to either the Add or Modify Product form as specified.
+     * @Param actionEvent The UI event that triggers the method call.
+     * @Param isModifying A flag that opens the Modify Product form when TRUE, otherwise opens Add Product form.
+     * @Param part The product to be modified, as is relevant. Nullable.
+     */
     public void navigateToProductForm(ActionEvent event, Boolean isModifying, Product product) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/ProductForm.fxml"));
@@ -212,7 +269,10 @@ public class MainController implements Initializable {
 
     }
 
-    // Overloaded to default to Add Part Form state
+    /**
+     * Overloaded method to make calling navigateToProductForm() more convenient. This method opens the "Add Product" form only.
+     * @Param actionEvent The UI event that triggers the method call.
+     */
     public void navigateToProductForm (ActionEvent event) {
         navigateToProductForm(event, false, null);
     }

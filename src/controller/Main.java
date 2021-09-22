@@ -10,6 +10,10 @@ import model.Inventory;
 import model.Outsourced;
 import model.Product;
 
+/**
+ * This class creates an application for inventory management. This is the main program thread. The Javadoc details
+ * may be found in the Javadoc folder at the root level of this project.
+ */
 
 public class Main extends Application {
 

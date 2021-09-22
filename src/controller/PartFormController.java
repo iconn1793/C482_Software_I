@@ -16,7 +16,11 @@ import model.Part;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * The controller class for the Add and Modify Part form.
+ */
 public class PartFormController implements Initializable {
+    // ** UI ELEMENTS ** //
     public RadioButton inHouseRadioButton;
     public RadioButton outsourcedRadioButton;
     public TextField idTextField;
@@ -30,13 +34,23 @@ public class PartFormController implements Initializable {
     public Button cancelButton;
     public Label flexibleLabel;
     public Label partFormTitle;
+
+    // ** INTERNAL ELEMENTS ** //
     private boolean _isModifyForm = false;
     private Part _part;
 
+    /**
+     * This method overrides the superclass' initialization method.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
     }
 
+    /**
+     * This method determines whether to set the form UI as the "Add Part" or "Modify Part" UI according to the flag, and stores a reference to a part to modify if any.
+     * @Param isModifyingPart A boolean to indicate whether to show the Modify Part form (when TRUE) or the Add Part form (when FALSE).
+     * @Param part The part to be modified, if applicable.
+     */
     public void setFormState(boolean isModifyingPart, Part part) {
         _isModifyForm = isModifyingPart;
         _part = part;
@@ -47,14 +61,26 @@ public class PartFormController implements Initializable {
         }
     }
 
+    /**
+     * This method sets the form state to InHouse when the InHouse radio button is selected.
+     * @Param actionEvent The UI event that triggers the method call.
+     */
     public void onInHouseBtn(ActionEvent actionEvent) {
         setInHouseState();
     }
 
+    /**
+     * This method sets the form state to Outsourced when the Outsourced radio button is selected.
+     * @Param actionEvent The UI event that triggers the method call.
+     */
     public void onOutsourcedBtn(ActionEvent actionEvent) {
         setOutsourcedState();
     }
 
+    /**
+     * This method triggers when the save button is pressed. It validates the user input and saves the new or modified part before navigating the user back to the main menu.
+     * @Param actionEvent The UI event that triggers the method call.
+     */
     public void onSaveBtn(ActionEvent actionEvent) {
         try {
             validateInputs();
@@ -65,7 +91,7 @@ public class PartFormController implements Initializable {
                 // FOR SAVING A MODIFIED PART
                 saveModifiedPart();
             }
-            navigateToMainMenu(actionEvent, "Main Menu");
+            navigateToMainMenu(actionEvent);
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText(e.getMessage());
@@ -73,15 +99,23 @@ public class PartFormController implements Initializable {
         }
     }
 
+    /**
+     * This method is called when the cancel button is pressed. It closes the form and navigates the user back to the main menu without saving or updating the part.
+     * @Param actionEvent The UI event that triggers the method call.
+     */
     public void onCancelBtn(ActionEvent actionEvent) {
-        navigateToMainMenu(actionEvent, "Main Menu");
+        navigateToMainMenu(actionEvent);
     }
 
-    private void navigateToMainMenu(ActionEvent event, String title) {
+    /**
+     * This method navigates the user back to the main menu.
+     * @Param actionEvent The UI event that triggers the method call.
+     */
+    private void navigateToMainMenu(ActionEvent event) {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/view/MainMenu.fxml"));
             Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-            stage.setTitle(title);
+            stage.setTitle("Inventory Management System");
             stage.setScene(new Scene(root, 1000, 500));
             stage.show();
         } catch (Exception e) {
@@ -89,7 +123,10 @@ public class PartFormController implements Initializable {
         }
     }
 
-    // HELPER FUNCTIONS
+    // ** HELPER FUNCTIONS ** //
+    /**
+     * This method sets the UI for the Add Part state, defaults in to In House state.
+     */
     private void setAddPartState() {
         partFormTitle.setText("Add Part");
         idTextField.setDisable(true);
@@ -97,6 +134,9 @@ public class PartFormController implements Initializable {
         setInHouseState();
     }
 
+    /**
+     * This method sets the UI for the Modify Part state.
+     */
     private void setModifyPartState() {
         partFormTitle.setText("Modify Part");
         idTextField.setDisable(true);
@@ -117,18 +157,27 @@ public class PartFormController implements Initializable {
         maxTextField.setText(String.valueOf(_part.getMax()));
     }
 
+    /**
+     * This method sets the UI for the InHouse part state.
+     */
     private void setInHouseState() {
         inHouseRadioButton.setSelected(true);
         outsourcedRadioButton.setSelected(false);
         flexibleLabel.setText("Machine ID");
     }
 
+    /**
+     * This method sets the UI for the Outsourced part state.
+     */
     private void setOutsourcedState() {
         inHouseRadioButton.setSelected(false);
         outsourcedRadioButton.setSelected(true);
         flexibleLabel.setText("Company Name");
     }
 
+    /**
+     * This method creates and stores a new part with the data entered, as either InHouse or Outsourced part accordingly.
+     */
     private void saveNewPart() {
         if (inHouseRadioButton.isSelected()) {
             InHouse newPart = new InHouse(Inventory.getNextPartIndex(), nameTextField.getText(), Double.parseDouble(priceTextField.getText()), Integer.parseInt(inventoryTextField.getText()), Integer.parseInt(minTextField.getText()), Integer.parseInt(maxTextField.getText()), Integer.parseInt(flexibleTextField.getText()));
@@ -141,6 +190,9 @@ public class PartFormController implements Initializable {
         }
     }
 
+    /**
+     * This method updates an existing part with the data entered.
+     */
     private void saveModifiedPart() {
         _part.setName(nameTextField.getText());
         _part.setPrice(Double.parseDouble(priceTextField.getText()));
@@ -156,7 +208,11 @@ public class PartFormController implements Initializable {
         }
     }
 
-    // Todo: future improvmeent to add validation on flex field
+    /**
+     * This method validates all user inputs meet acceptable criteria or else throws an exception.
+     * FUTURE IMPROVEMENT: Add validation on the flex field to enforce String or Number data type according to InHouse or Outsourced form state.
+     * @throws IllegalArgumentException Throws an exception whenever a datum does not meet acceptable criteria.
+     */
     private void validateInputs() throws IllegalArgumentException {
         Float maxValue;
         Float minValue;
